@@ -16,8 +16,8 @@ How I got GOG commandos running in oracle cloud for free forever using an x86 in
  - Destination port range = 4321-4322
  - Add Ingress rules, then repeat but with IP Protocol UDP 
  - cd into C:\GOG Games\Commandos
- - On your machine run: scp -i ~/.ssh/id_rsa .\mpserver.exe ubuntu@<instance Public IP address>:/home/ubuntu
- - ssh <instance Public IP address> -i ~/.ssh/id_rsa
+ - On your machine run: scp -i ~/.ssh/id_rsa .\mpserver.exe ubuntu@&lt;instance Public IP address&gt;:/home/ubuntu
+ - ssh &lt;instance Public IP address&gt; -i ~/.ssh/id_rsa
  - sudo apt install --install-recommends wine
  - sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 4321 -j ACCEPT
  - sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 4322 -j ACCEPT
@@ -26,5 +26,5 @@ How I got GOG commandos running in oracle cloud for free forever using an x86 in
  - wine mpserver.exe
  - Run commandos on your machine. If you get an error about directx5 either rename comandos.exe to commandos.exe or run comandos_w10.exe
  - New Game, Multiplayer Game
- - Put the <instance Public IP Address> as the multiplayer server
+ - Put the &lt;instance Public IP address&gt; as the multiplayer server
  - If you can connect, congratulations, it has worked! If I've missed any steps, please feel free to raise a PR or issue
