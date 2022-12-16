@@ -1,2 +1,30 @@
 # commandos_mp_server
 How I got GOG commandos running in oracle cloud for free forever using an x86 instance of ubuntu
+ - Install GOG Commandos Ammo Pack. If you haven't already, download both of these files to the same place, then run the executable:
+ - https://www.gog.com/downloads/commandos_behind_enemy_lines/en1installer0
+ - https://www.gog.com/downloads/commandos_behind_enemy_lines/en1installer1
+ - You will need to be logged into GOG and have purchased commandos ammo pack for this to work
+ - Go to https://signup.cloud.oracle.com/ to sign up for a free account
+ - You will need to fill out all of your details and provide a credit/debit card (which will only be charged a small amount to check it's legitimate and then refunded)
+ - Create a new instance, make it VM.Standard.E2.1.Micro running Ubuntu 22.04
+ - Have it generate an ssh key and download it, or upload your own key
+ - To create one on your machine, run ssh-keygen and accept all the defaults
+ - Wait for the instance to be created and note the Public IP address
+ - Open https://cloud.oracle.com/networking/vcns
+ - Select your VCN, Public Subnet, Security List, Add Ingress rules
+ - Source CIDR = 0.0.0.0/0
+ - Destination port range = 4321-4322
+ - Add Ingress rules, then repeat but with IP Protocol UDP 
+ - cd into C:\GOG Games\Commandos
+ - On your machine run: scp -i ~/.ssh/id_rsa .\mpserver.exe ubuntu@<instance Public IP address>:/home/ubuntu
+ - ssh <instance Public IP address> -i ~/.ssh/id_rsa
+ - sudo apt install --install-recommends wine
+ - sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 4321 -j ACCEPT
+ - sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 4322 -j ACCEPT
+ - sudo iptables -I INPUT 6 -m state --state NEW -p udp --dport 4321 -j ACCEPT
+ - sudo iptables -I INPUT 6 -m state --state NEW -p udp --dport 4322 -j ACCEPT
+ - wine mpserver.exe
+ - Run commandos on your machine. If you get an error about directx5 either rename comandos.exe to commandos.exe or run comandos_w10.exe
+ - New Game, Multiplayer Game
+ - Put the <instance Public IP Address> as the multiplayer server
+ - If you can connect, congratulations, it has worked! If I've missed any steps, please feel free to raise a PR or issue
